@@ -1,0 +1,5 @@
+name: jobe_find
+type: module
+description: job find in your region
+core: 8.x
+package: Custom

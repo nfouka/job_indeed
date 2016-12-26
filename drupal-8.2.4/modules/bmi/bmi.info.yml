@@ -1,0 +1,11 @@
+name: BMI (Body Mass Index)
+type: module
+description: A module which calculates BMI
+# core: 8.x
+package: BMI
+
+# Information added by Drupal.org packaging script on 2016-01-25
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'bmi'
+datestamp: 1453702456

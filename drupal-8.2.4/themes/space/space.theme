@@ -1,0 +1,169 @@
+<?php
+
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function space_preprocess_page(&$variables) {
+  // Messages are being shown below content even though printed above in
+  // page.html.twig. Moving the messages manually.
+  if (isset($variables['page']['content']['messages'])) {
+    $variables['page']['messages'][] = $variables['page']['content']['messages'];
+    unset($variables['page']['content']['messages']);
+  }
+
+  // Set the logo path.
+  $variables['space_logo'] = theme_get_setting('logo.url');
+
+  // Add social media options.
+  $social_options = array(
+    'icon-facebook' => 'space_facebook',
+    'icon-twitter' => 'space_twitter',
+    'icon-linkedin' => 'space_linkedin',
+    'icon-codepen' => 'space_codepen',
+    'icon-bitbucket' => 'space_bitbucket',
+    'icon-github' => 'space_github',
+    'icon-stackoverflow' => 'space_stack_overflow',
+  );
+
+  // Loop through each option and create a link if it exists.
+  foreach ($social_options as $class => $option) {
+    if (theme_get_setting($option)) {
+      $url = \Drupal\Core\Url::fromUri(theme_get_setting($option));
+      $link_options = array(
+        'attributes' => array(
+          'class' => array($class),
+          'target' => '_blank',
+        ),
+      );
+      $url->setOptions($link_options);
+
+      $social_icons[$option] = array(
+        '#markup' => \Drupal::l('', $url),
+        '#wrapper_attributes' => array(
+          'class' => array(
+            "social-link",
+          ),
+        ),
+      );
+    }
+  }
+
+  // Loop through each social icon and build the list.
+  if (!empty($social_icons)) {
+    $variables['social_icons'] = array(
+      '#theme' => 'item_list',
+      '#items' => $social_icons,
+      '#attributes' => array('id' => 'social-links'),
+    );
+  }
+
+  // Only use the following settings on the front page.
+  if ($variables['is_front'] === TRUE) {
+    // Add the header image to the page.
+    $fid = theme_get_setting('main_header_media');
+
+
+    if (!empty($fid) && is_numeric($fid[0])) {
+      $file = File::load($fid[0]);
+
+      if (is_object($file) && $file->getFileUri()) {
+        $variables['header_media_url'] = file_create_url($file->getFileUri());
+      }
+
+      // Check to see if the file is of a video mime.
+      if ($file->getMimeType() == 'video/mp4' || $file->getMimeType() == 'video/webm') {
+        $video_still_fid = theme_get_setting('header_video_still');
+        if (!empty($video_still_fid) && is_numeric($video_still_fid[0])) {
+          $header_video_file = File::load($video_still_fid[0]);
+          $variables['header_video_still'] = file_create_url($header_video_file->getFileUri());
+          $variables['header_media_video'] = TRUE;
+        }
+        else {
+          $variables['header_media_video'] = FALSE;
+        }
+      }
+      else {
+        $variables['header_media_video'] = FALSE;
+      }
+    }
+    else {
+      // Set the default image.
+      $variables['header_media_url'] = '/themes/space/images/header-top.jpg';
+    }
+
+    // Add a variable to twig if we should show the screen effect in the header.
+    $screen = theme_get_setting('main_header_screen');
+    if ($screen !== 0) {
+      $variables['screen'] = 1;
+    }
+
+    $fade = theme_get_setting('main_header_fade');
+    if ($fade !== 0) {
+      $variables['fade'] = 1;
+    }
+
+    // Add space-header.js to help with branding positioning.
+    $variables['#attached']['library'][] = 'space/space-header';
+  }
+
+  // Set overlay options.
+  if (theme_get_setting('main_header_overlay')) {
+    $color = theme_get_setting('color_picker');
+    $opacity = theme_get_setting('opacity');
+    $variables['overlay_styles'] = "background-color: $color; opacity: $opacity;";
+  }
+
+  // Set content background variables that are set through theme settings.
+  $regions = array(
+    'content' => 'Content',
+    'content_2' => 'Content 2',
+    'content_3' => 'Content 3',
+    'content_4' => 'Content 4',
+    'content_5' => 'Content 5',
+  );
+
+  // Loop through each region and check if an image should be shown.
+  foreach ($regions as $key => $region) {
+    if (theme_get_setting('region_' . $key)) {
+      // Check to see if we should show the image.
+      if (theme_get_setting('region_' . $key . '_front') && $variables['is_front']) {
+        // Grab the image url for use in the background.
+        $fid = theme_get_setting('region_' . $key . '_image');
+
+        if (!empty($fid)) {
+          $file = File::load($fid[0]);
+          if (is_object($file)) {
+            $variables['region_' . $key . '_image_url'] = 'url("' . file_create_url($file->getFileUri()) . '") fixed';
+          }
+        }
+
+        if (theme_get_setting('region_' . $key . '_screen')) {
+          $variables['region_' . $key . '_screen'] = theme_get_setting('region_' . $key . '_screen');
+        }
+      }
+      if (!theme_get_setting('region_' . $key . '_front')) {
+        // Grab the image url for use in the background.
+        $fid = theme_get_setting('region_' . $key . '_image');
+
+        if (!empty($fid)) {
+          $file = File::load($fid[0]);
+          if (is_object($file)) {
+            $variables['region_' . $key . '_image_url'] = 'url("' . file_create_url($file->getFileUri()) . '") fixed';
+          }
+        }
+
+        if (theme_get_setting('region_' . $key . '_screen')) {
+          $variables['region_' . $key . '_screen'] = theme_get_setting('region_' . $key . '_screen');
+        }
+      }
+    }
+
+    // If no image was applied make a default property.
+    if (empty($variables['region_' . $key . '_image_url'])) {
+      $variables['region_' . $key . '_image_url'] = 'none';
+    }
+  }
+}

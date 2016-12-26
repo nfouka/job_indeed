@@ -1,0 +1,28 @@
+/**
+ * @file
+ * Styling for blocks.
+ */
+
+.block-system-branding-block {
+  .site-logo {
+    display: block;
+    margin: 0 auto;
+    width: 25%;
+  }
+}
+
+@media #{$tablet_small} {
+  .block-system-branding-block {
+    .site-logo {
+      width: 35%;
+    }
+  }
+}
+
+@media #{$mobile} {
+  .block-system-branding-block {
+    .site-logo {
+      width: 40%;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+space.mobile:
+  label: mobile
+  mediaQuery: ''
+  weight: 2
+  multipliers:
+    - 1x
+space.tablet:
+  label: tablet
+  mediaQuery: 'all and (min-width: 560px)'
+  weight: 1
+  multipliers:
+    - 1x
+space.desktop:
+  label: desktop
+  mediaQuery: 'all and (min-width: 1025px)'
+  weight: 0
+  multipliers:
+    - 1x

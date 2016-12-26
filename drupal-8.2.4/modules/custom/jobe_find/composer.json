@@ -1,0 +1,14 @@
+{
+  "name": "drupal/jobe_find",
+  "type": "drupal-module",
+  "description": "job find in your region",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/jobe_find",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/jobe_find",
+    "source": "http://cgit.drupalcode.org/jobe_find"
+  },
+  "require": { }
+}

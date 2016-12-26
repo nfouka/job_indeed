@@ -1,0 +1,61 @@
+/**
+ * @file
+ * Custom variables and mixins.
+ *
+ * This file is only for custom items that can be imported into any other file.
+ * It is VERY important that this file does not generate any css on it's own.
+ */
+
+@import "compass";
+
+/**
+ * Media queries.
+ */
+$tablet: "all and (max-width: 1024px)";
+$tablet_small: "all and (max-width: 860px)";
+$mobile: "all and (max-width: 619px)";
+$toolbar: "all and (max-width: 975px)";
+
+/**
+ * Colors.
+ */
+$future_blue: #0bcdff;
+$future_orange: #ff9634;
+$future_gray: #222;
+
+/**
+ * Mixin to reset floating elements.
+ */
+@mixin clearfix() {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+/**
+ * Icons.
+ */
+@mixin icon($code) {
+  &:before{
+    content: $code;
+    display: inline-block;
+    font: {
+      family: "fontello";
+      style: normal;
+      transform: none;
+      varient: normal;
+      weight: normal;
+    }
+    speak: none;
+    text: {
+      align: center;
+      decoration: inherit;
+      shadow: 1px 1px 1px rgba(127, 127, 127, 0.3);
+    }
+    width: 1em;
+  }
+}

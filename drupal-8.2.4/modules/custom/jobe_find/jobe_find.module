@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Contains jobe_find.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function jobe_find_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the jobe_find module.
+    case 'help.page.jobe_find':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('job find in your region') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function jobe_find_theme() {
+  return [
+    'jobe_find' => [
+      'template' => 'jobe_find',
+      'render element' => 'children',
+    ],
+  ];
+}

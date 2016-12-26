@@ -1,0 +1,295 @@
+{#
+/**
+ * @file
+ * Space's theme implementation to display a single page.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+ * - hide_site_name: A flag indicating if the site name has been toggled off on
+ *   the theme settings page. If hidden, the "visually-hidden" class is added
+ *   to make the site name visually hidden, but still accessible.
+ * - hide_site_slogan: A flag indicating if the site slogan has been toggled off
+ *   on the theme settings page. If hidden, the "visually-hidden" class is
+ *   added to make the site slogan visually hidden, but still accessible.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title: The page title, for use in the actual content.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - tabs: Tabs linking to any sub-pages beneath the current page (e.g., the
+ *   view and edit tabs when displaying a node).
+ * - action_links: Actions local to the page, such as "Add menu" on the menu
+ *   administration interface.
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - page.header_top: Items for the header top region.
+ * - page.header: Items for the header region.
+ * - page.main_menu: The main menu of the site.
+ * - messages: Site message display region.
+ * - page_top: Items for the top of the page.
+ * - content_top: Items that display above the content region.
+ * - content: Items for the content region.
+ * - content_bottom: Items that will show under the content region.
+ * - left_sidebar: Items for the left sidebar region.
+ * - right_sidebar: Items for the right sidebar region.
+ * - page_bottom: Items for the page bottom region.
+ * - footer_left: Items for the footer left region.
+ * - footer_middle: Items for the footer middle region.
+ * - footer_right: Items for the footer right region.
+ *
+ * @see template_preprocess_page()
+ * @see space_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+{% if is_front %}
+  <div id="header-top" class="section">
+    {% if header_media_video %}
+      <video id="header-video" class="ng-scope" poster="{{ header_video_still }}" autoplay loop>
+        <source src="{{ header_media_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% else %}
+      <div id="header-image" style="background: #000 url('{{ header_media_url }}') no-repeat fixed center bottom / cover "></div>
+    {% endif %}
+
+    {% if overlay_styles %}
+      <div id="header-overlay" style="{{ overlay_styles }}"></div>
+    {% endif %}
+
+    {% if screen %}
+      <div id="header-screen"></div>
+    {% endif %}
+    {% if fade %}
+      <div id="header-bg"></div>
+    {% endif %}
+    {{ page.header_top }}
+
+    <div class="section layout-container clearfix">
+      {% if logo %}
+        <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home" id="logo">
+          <img src="{{ space_logo }}" alt="{{ 'Home'|t }}" />
+        </a>
+      {% endif %}
+    </div>
+    <div class="nav-down"></div>
+  </div>
+
+  <div class="separator-wrapper">
+    <div class="separator separator-left"></div>
+    <div class="joint left"></div>
+    <div class="separator separator-middle"></div>
+    <div class="joint right"></div>
+    <div class="separator separator-right"></div>
+  </div>
+{% endif %}
+
+<div id="page-wrapper">
+  <div id="page">
+    {% if page.main_menu %}
+      <div id="main-menu">
+        <!-- Show the site logo -->
+        <img alt="{{ 'Home'|t }}" src="{{ space_logo }}">
+        {{ page.main_menu }}
+      </div>
+      <div class="menu-hamburger icon-menu">
+      </div>
+    {% endif %}
+
+    {% if page.header %}
+      <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
+        {{ page.header }}
+      </header>
+    {% endif %}
+
+    {% if page.featured %}
+      <div class="featured" class="section">
+        <aside class="featured__inner section layout-container clearfix" role="complementary">
+          {{ page.featured }}
+        </aside>
+      </div>
+    {% endif %}
+
+    {% if page.page_top %}
+      <div class="page-top">
+        <aside class="page-top__inner section layout-container clearfix" role="complementary">
+          {{ page.page_top }}
+        </aside>
+      </div>
+    {% endif %}
+
+    <div id="main-wrapper" class="layout-main-wrapper layout-container clearfix" style="background: {{ region_content_image_url }}">
+      {% if region_content_screen %}
+        <div class="screen"></div>
+      {% endif %}
+      <div id="main" class="layout-main clearfix">
+        {{ page.breadcrumb }}
+
+        {% if page.sidebar_left and page.sidebar_right %}
+          {% set content_class = 'content-both' %}
+        {% elseif page.sidebar_left and not page.sidebar_right %}
+          {% set content_class = 'content-left' %}
+        {% elseif page.sidebar_right and not page.sidebar_left %}
+          {% set content_class = 'content-right' %}
+        {% elseif not page.sidebar_left and not page.sidebar_right %}
+          {% set content_class = 'content-full' %}
+        {% endif %}
+
+        <main id="content" class="column main-content {{ content_class }}" role="main">
+          {% if page.content_top %}
+            <div class="content-top">
+              <aside class="content-top__inner section layout-container clearfix" role="complementary">
+                {{ page.content_top }}
+              </aside>
+            </div>
+          {% endif %}
+
+          <section class="section">
+            <a id="main-content" tabindex="-1"></a>
+            {{ title_prefix }}
+            {% if title %}
+              <h1 class="title" id="page-title">
+                {{ title }}
+              </h1>
+            {% endif %}
+            {{ title_suffix }}
+            {% if tabs %}
+              <nav class="tabs" role="navigation" aria-label="{{ 'Tabs'|t }}">
+                {{ tabs }}
+              </nav>
+            {% endif %}
+            {{ page.help }}
+            {% if action_links %}
+              <ul class="action-links">{{ action_links }}</ul>
+            {% endif %}
+
+            {{ page.content }}
+          </section>
+
+          {% if page.content_bottom %}
+            <div class="content-bottom">
+              <aside class="content-bottom__inner section layout-container clearfix" role="complementary">
+                {{ page.content_bottom }}
+              </aside>
+            </div>
+          {% endif %}
+
+        </main>
+        {% if page.sidebar_left %}
+          <div id="sidebar-left" class="column sidebar">
+            <aside class="section" role="complementary">
+              {{ page.sidebar_left }}
+            </aside>
+          </div>
+        {% endif %}
+        {% if page.sidebar_right %}
+          <div id="sidebar-right" class="column sidebar">
+            <aside class="section" role="complementary">
+              {{ page.sidebar_right }}
+            </aside>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="separator-footer"></div>
+
+    {% if page.content_2 %}
+      <div class="content_2_wrapper" style="background: {{ region_content_2_image_url }}">
+        {% if region_content_2_screen %}
+          <div class="screen"></div>
+        {% endif %}
+        <div class="content_2">
+          <aside class="content_2__inner section layout-container clearfix" role="complementary">
+            {{ page.content_2 }}
+          </aside>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if page.content_3 %}
+      <div class="content_3_wrapper" style="background: {{ region_content_3_image_url }}">
+        {% if region_content_3_screen %}
+          <div class="screen"></div>
+        {% endif %}
+        <div class="content_3">
+          <aside class="content_3__inner section layout-container clearfix" role="complementary">
+            {{ page.content_3 }}
+          </aside>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if page.content_4 %}
+      <div class="content_4_wrapper" style="background: {{ region_content_4_image_url }}">
+        {% if region_content_4_screen %}
+          <div class="screen"></div>
+        {% endif %}
+        <div class="content_4">
+          <aside class="content_4__inner section layout-container clearfix" role="complementary">
+            {{ page.content_4 }}
+          </aside>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if page.content_5 %}
+      <div class="content_5_wrapper" style="background: {{ region_content_5_image_url }}">
+        {% if region_content_5_screen %}
+          <div class="screen"></div>
+        {% endif %}
+        <div class="content_5">
+          <aside class="content_5__inner section layout-container clearfix" role="complementary">
+          {{ page.content_5 }}
+          </aside>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if page.page_bottom %}
+      <div class="page-bottom">
+        <aside class="page-bottom__inner section layout-container clearfix" role="complementary">
+          {{ page.page_bottom }}
+        </aside>
+      </div>
+    {% endif %}
+
+    <footer class="site-footer">
+      {% if social_icons %}
+        {{ social_icons }}
+      {% endif %}
+      {% if page.footer_left or page.footer_middle or page.footer_right %}
+        <div class="site-footer__top layout-container clearfix">
+          {{ page.footer_left }}
+          {{ page.footer_middle }}
+          {{ page.footer_right }}
+        </div>
+      {% endif %}
+      {% if page.footer_bottom %}
+        {{ page.footer_bottom }}
+      {% endif %}
+    </footer>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+
+jobe_find.default_controller_hello:
+  path: '/jobe_find/hello/{name}'
+  defaults:
+    _controller: '\Drupal\jobe_find\Controller\DefaultController::hello'
+    _title: 'job'
+  requirements:
+    _permission: 'access content'
+
+
+jobe_find.default_controller_validate:
+  path: '/jobe_find/validate/{id}'
+  defaults:
+    _controller: '\Drupal\jobe_find\Controller\DefaultController::validate'
+    _title: 'Validate Job'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,44 @@
+name: gscop2
+type: theme
+'base theme': at_core
+'base theme original': rc2
+'subtheme type': adaptive_subtheme
+layout: site-builder
+description: 'gscopeopenproject.<br />Base theme: at_core <br />Machine-name: gscop_ <br />Generated: Mon 26th, Dec, 2016 - 19:10'
+'alt text': 'Screenshot for gscop2'
+tags: sub-theme
+regions:
+  leaderboard: Leaderboard
+  header_first: 'Header first'
+  header_second: 'Header second'
+  navbar: Navbar
+  highlighted: Highlighted
+  features_first: 'Features first'
+  features_second: 'Features second'
+  features_third: 'Features third'
+  content_prefix: 'Content prefix'
+  content: 'Main content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  content_suffix: 'Content suffix'
+  subfeatures_first: 'Sub-features first'
+  subfeatures_second: 'Sub-features second'
+  subfeatures_third: 'Sub-features third'
+  subfeatures_fourth: 'Sub-features fourth'
+  footer: Footer
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+features:
+  - logo
+  - favicon
+  - node_user_picture
+  - comment_user_picture
+  - comment_user_verification
+stylesheets-remove:
+  - '@stable/css/node/node.preview.css'
+  - '@stable/css/system/components/tablesort.module.css'
+libraries-extend:
+  quickedit/quickedit:
+    - gscop_/quickedit
+version: '1.1'
+core: 8.x

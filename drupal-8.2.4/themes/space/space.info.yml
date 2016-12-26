@@ -1,0 +1,41 @@
+name: Space
+type: theme
+base theme: classy
+description: 'A theme with a space setting.'
+# core: '8.x'
+#screenshot: space.gif
+
+stylesheets-remove:
+  - classy/css/layout.css
+  - core/modules/system/css/system.theme.css
+
+libraries:
+  - space/global-styling
+
+regions:
+  header_top: 'Header Top'
+  header: Header
+  main_menu: 'Main Menu'
+  featured: 'Featured'
+  messages: 'Messages'
+  page_top: 'Page Top'
+  content_top: 'Content Top'
+  content: 'Content'
+  content_2: 'Content 2'
+  content_3: 'Content 3'
+  content_4: 'Content 4'
+  content_5: 'Content 5'
+  content_bottom: 'Content Bottom'
+  sidebar_left: 'Sidebar Left'
+  sidebar_right: 'Sidebar Right'
+  page_bottom: 'Page Bottom'
+  footer_left: 'Footer Left'
+  footer_middle: 'Footer Middle'
+  footer_right: 'Footer Right'
+  footer_bottom: 'Footer Bottom'
+
+# Information added by Drupal.org packaging script on 2016-10-17
+version: '8.x-1.0-beta3'
+core: '8.x'
+project: 'space'
+datestamp: 1476669245

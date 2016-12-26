@@ -1,0 +1,50 @@
+/**
+ * @file
+ * Basic views theming.
+ */
+
+.views-row {
+  margin-bottom: 20px;
+}
+
+.more-link a {
+  border: 1px solid $future_blue;
+  clear: both;
+  display: block;
+  font-size: 150%;
+  margin: 0 auto 40px;
+  padding: 10px 20px;
+  position: relative;
+  text-align: center;
+  top: 20px;
+  width: 160px;
+
+  @include border-radius(8px);
+  @include transition(all 500ms linear);
+
+  &:hover {
+    background-color: rgba(darken($future_blue, 20%), 0.8);
+    box-shadow: 0 0 2px 0 $future_blue;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &::after {
+    background-color: rgba(255, 255, 255, 0.4);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+
+    @include transition(none);
+  }
+
+  &:hover::after {
+    background-color: rgba(255, 255, 255, 0);
+    width: 100%;
+
+    @include transition(all 300ms ease-out);
+  }
+}

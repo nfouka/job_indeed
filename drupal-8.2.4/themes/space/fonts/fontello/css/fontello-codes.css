@@ -1,0 +1,23 @@
+
+.icon-codeopen:before { content: '\21'; } /* '!' */
+.icon-linkedin-squared:before { content: '\23'; } /* '#' */
+.icon-globe-1:before { content: '\24'; } /* '$' */
+.icon-light-up-1:before { content: '\2e'; } /* '.' */
+.icon-star-1:before { content: '\2f'; } /* '/' */
+.icon-star-empty-1:before { content: '\30'; } /* '0' */
+.icon-empire-1:before { content: '\31'; } /* '1' */
+.icon-rebel-1:before { content: '\32'; } /* '2' */
+.icon-space-shuttle-1:before { content: '\34'; } /* '4' */
+.icon-beaker-1:before { content: '\35'; } /* '5' */
+.icon-rocket-1:before { content: '\36'; } /* '6' */
+.icon-bitbucket:before { content: '\62'; } /* 'b' */
+.icon-drupal:before { content: '\64'; } /* 'd' */
+.icon-facebook-1:before { content: '\66'; } /* 'f' */
+.icon-github:before { content: '\67'; } /* 'g' */
+.icon-menu:before { content: '\6d'; } /* 'm' */
+.icon-up-dir-1:before { content: '\6f'; } /* 'o' */
+.icon-phone-1:before { content: '\70'; } /* 'p' */
+.icon-rss-1:before { content: '\72'; } /* 'r' */
+.icon-stackoverflow:before { content: '\73'; } /* 's' */
+.icon-twitter-1:before { content: '\74'; } /* 't' */
+.icon-youtube-play:before { content: '\79'; } /* 'y' */
